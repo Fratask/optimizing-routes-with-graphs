@@ -21,12 +21,15 @@ public class Edge {
     private Long id;
 
     @ManyToOne
-    @JoinColumn(name = "vertex1_id")
+    @JoinColumn(name = "vertex1_id", nullable = false)
     private Vertex vertex1;
 
     @ManyToOne
-    @JoinColumn(name = "vertex2_id")
+    @JoinColumn(name = "vertex2_id", nullable = false)
     private Vertex vertex2;
+
+    @Column(name = "cost", nullable = false)
+    private Double cost;
 
     public Long getId() {
         return id;
@@ -50,5 +53,13 @@ public class Edge {
 
     public void setVertex2(Vertex vertex2) {
         this.vertex2 = vertex2;
+    }
+
+    public Double getCost() {
+        return cost;
+    }
+
+    public void setCost(Double cost) {
+        this.cost = cost;
     }
 }

@@ -5,6 +5,7 @@ public class EdgeDto {
     private Long id;
     private VertexDto vertexDto1;
     private VertexDto vertexDto2;
+    private Double cost;
 
     public Long getId() {
         return id;
@@ -28,5 +29,13 @@ public class EdgeDto {
 
     public void setVertexDto2(VertexDto vertexDto2) {
         this.vertexDto2 = vertexDto2;
+    }
+
+    public Double getCost() {
+        return cost;
+    }
+
+    public void setCost(Double cost) {
+        this.cost = cost;
     }
 }

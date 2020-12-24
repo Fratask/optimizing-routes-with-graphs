@@ -1,5 +1,6 @@
 package ru.akhatov.amir.controller;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -10,7 +11,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import ru.akhatov.amir.model.dto.VertexDto;
-import sun.reflect.generics.reflectiveObjects.NotImplementedException;
+import ru.akhatov.amir.service.VertexService;
 
 @Controller
 @RequestMapping(VertexController.BASE_MAPPING)
@@ -22,23 +23,26 @@ public class VertexController {
     private final static String UPDATE_MAPPING = "/update";
     private final static String DELETE_MAPPING = "/delete/{id}";
 
+    @Autowired
+    private VertexService vertexService;
+
     @PostMapping(ADD_MAPPING)
     public ResponseEntity<?> addVertex(@RequestBody VertexDto dto) {
-        throw new NotImplementedException();
+        return ResponseEntity.ok(vertexService.addVertex(dto));
     }
 
     @GetMapping(GET_ALL_MAPPING)
     public ResponseEntity<?> getAllVertexes() {
-        throw new NotImplementedException();
+        return ResponseEntity.ok(vertexService.getAll());
     }
 
     @PutMapping(UPDATE_MAPPING)
     public ResponseEntity<?> updateVertex(@RequestBody VertexDto dto) {
-        throw new NotImplementedException();
+        return ResponseEntity.ok(vertexService.updateVertex(dto));
     }
 
     @DeleteMapping(DELETE_MAPPING)
     public ResponseEntity<?> deleteVertex(@PathVariable Long id) {
-        throw new NotImplementedException();
+        return ResponseEntity.ok(vertexService.deleteVertex(id));
     }
 }
