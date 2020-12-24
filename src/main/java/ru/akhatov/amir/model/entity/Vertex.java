@@ -2,6 +2,7 @@ package ru.akhatov.amir.model.entity;
 
 import javax.persistence.*;
 
+@Entity
 @Table(name = "vertexes")
 public class Vertex {
 

@@ -2,6 +2,7 @@ package ru.akhatov.amir.model.entity;
 
 import javax.persistence.*;
 
+@Entity
 @Table(name = "edges")
 public class Edge {
 
@@ -11,9 +12,12 @@ public class Edge {
     @Column(name = "id", updatable = false, unique = true, nullable = false)
     private Long id;
 
-    //TODO: Annotate
+    @ManyToOne
+    @JoinColumn(name = "vertex1_id")
     private Vertex vertex1;
 
+    @ManyToOne
+    @JoinColumn(name = "vertex2_id")
     private Vertex vertex2;
 
     public Long getId() {
