@@ -2,11 +2,11 @@ package ru.akhatov.amir.exception;
 
 public enum DiplomResponseCode {
     UNKNOWN_EXCEPTION(0, "Unknown exception"),
-    VERTEX_NOT_FOUND(1, "Vertex not found"),
-    ID_MUST_NOT_BE_NULL(2, "Id must not be null"),
-    VERTEX_ALREADY_EXISTS(3, "Vertex already exists"),
-    COST_MUST_NOT_BE_NULL(4, "Cost must not be null for edge"),
-    EDGE_NOT_FOUND(5, "Edge not found"),
+    DIFFERENT_NODE_TYPES(1, "Different node types"),
+    NODE_NOT_FOUND(2, "Node not found"),
+    ROUTE_NOT_FOUND(3, "Route not found"),
+    NODE_ALREADY_EXISTS(4, "Node already exists"),
+    NODE_TYPE_NOT_FOUND(5, "Node type not found"),
     ;
 
     private Long errorCode;
