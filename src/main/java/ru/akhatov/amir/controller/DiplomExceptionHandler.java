@@ -15,12 +15,14 @@ public class DiplomExceptionHandler extends ResponseEntityExceptionHandler {
     @ResponseBody
     @ExceptionHandler({DiplomException.class})
     public ResponseEntity<DiplomException> handleDiplomException(DiplomException ex) {
+        ex.printStackTrace();
         return new ResponseEntity<>(ex, HttpStatus.BAD_REQUEST);
     }
 
     @ResponseBody
     @ExceptionHandler(Exception.class)
     public ResponseEntity<?> handleException(Exception ex) {
+        ex.printStackTrace();
         return new ResponseEntity<>(
                 new DiplomException(DiplomResponseCode.UNKNOWN_EXCEPTION.getErrorCode(), ex.getMessage()),
                 HttpStatus.INTERNAL_SERVER_ERROR);

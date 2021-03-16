@@ -16,7 +16,13 @@ create table nodes
     latitude  double precision not null,
     longitude double precision not null,
     name      varchar(255)     not null,
-    node_type varchar(255)
+    node_type varchar(255)     not null,
+    group_num bigint,
+    color     varchar(7)       not null,
+    pointX    double precision,
+    pointY    double precision,
+    textX     double precision,
+    textY     double precision
 );
 
 alter table nodes
@@ -28,10 +34,10 @@ create table connections
         constraint connections_pkey
             primary key,
     node_from_id bigint
-        constraint fkoi7ud200j8unsx5mocl5oblkk
+        constraint node_from_id_nodes_fk
             references nodes,
     node_to_id   bigint
-        constraint fkkgtw0r4nsl48pvkrih2te6a75
+        constraint node_to_id_nodes_fk
             references nodes
 );
 

@@ -7,9 +7,10 @@ import ru.akhatov.amir.model.dto.NodeDto;
 import ru.akhatov.amir.model.entity.Graph;
 import ru.akhatov.amir.model.entity.Node;
 import ru.akhatov.amir.model.entity.NodeType;
+import ru.akhatov.amir.model.entity.RouteNode;
+import ru.akhatov.amir.model.mapper.NodeMapper;
 import ru.akhatov.amir.repository.NodeRepository;
 import ru.akhatov.amir.utils.HaversineScorer;
-import ru.akhatov.amir.utils.RouteNode;
 import ru.akhatov.amir.utils.Scorer;
 
 import java.util.ArrayList;
@@ -31,13 +32,16 @@ public class RouteFinderService {
     @Autowired
     private NodeRepository nodeRepository;
 
+    @Autowired
+    private NodeMapper nodeMapper;
+
     private final Map<NodeType, Graph> graphMap;
 
     public RouteFinderService(List<Graph> graphs) {
         graphMap = graphs.stream().collect(Collectors.toMap(Graph::getNodeTypeForGraph, Function.identity()));
     }
 
-    public List<Node> findRoute(NodeDto fromDto, NodeDto toDto) {
+    public List<NodeDto> findRoute(NodeDto fromDto, NodeDto toDto) {
         if (!fromDto.getNodeType().equals(toDto.getNodeType())) {
             throw new DiplomException(DIFFERENT_NODE_TYPES);
         }
@@ -69,7 +73,7 @@ public class RouteFinderService {
                 } while (current != null);
 
 //                System.out.println("Route: " + route);
-                return route;
+                return nodeMapper.toDtoList(route);
             }
 
             graph.getConnections(next.getCurrent()).forEach(connection -> {

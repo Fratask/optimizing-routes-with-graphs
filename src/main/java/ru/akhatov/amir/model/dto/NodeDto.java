@@ -9,6 +9,12 @@ public class NodeDto {
     private double latitude;
     private double longitude;
     private NodeType nodeType;
+    private Long groupNum;
+    private String color;
+    private double pointX;
+    private double pointY;
+    private double textX;
+    private double textY;
 
     public Long getId() {
         return id;
@@ -48,5 +54,53 @@ public class NodeDto {
 
     public void setNodeType(NodeType nodeType) {
         this.nodeType = nodeType;
+    }
+
+    public Long getGroupNum() {
+        return groupNum;
+    }
+
+    public void setGroupNum(Long groupNum) {
+        this.groupNum = groupNum;
+    }
+
+    public String getColor() {
+        return color;
+    }
+
+    public void setColor(String color) {
+        this.color = color;
+    }
+
+    public double getTextX() {
+        return textX;
+    }
+
+    public void setTextX(double textX) {
+        this.textX = textX;
+    }
+
+    public double getTextY() {
+        return textY;
+    }
+
+    public void setTextY(double textY) {
+        this.textY = textY;
+    }
+
+    public double getPointX() {
+        return pointX;
+    }
+
+    public void setPointX(double pointX) {
+        this.pointX = pointX;
+    }
+
+    public double getPointY() {
+        return pointY;
+    }
+
+    public void setPointY(double pointY) {
+        this.pointY = pointY;
     }
 }

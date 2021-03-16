@@ -32,6 +32,24 @@ public class Node {
     @Enumerated(EnumType.STRING)
     private NodeType nodeType;
 
+    @Column(name = "group_num", nullable = false)
+    private Long groupNum;
+
+    @Column(name = "color", nullable = false)
+    private String color;
+
+    @Column(name = "pointX", nullable = false)
+    private double pointX;
+
+    @Column(name = "pointY", nullable = false)
+    private double pointY;
+
+    @Column(name = "textX", nullable = false)
+    private double textX;
+
+    @Column(name = "textY", nullable = false)
+    private double textY;
+
     public Long getId() {
         return id;
     }
@@ -72,14 +90,52 @@ public class Node {
         this.nodeType = nodeType;
     }
 
-    @Override
-    public String toString() {
-        return "Station{" +
-                "id='" + id + '\'' +
-                ", name='" + name + '\'' +
-                ", latitude=" + latitude +
-                ", longitude=" + longitude +
-                '}';
+    public Long getGroupNum() {
+        return groupNum;
+    }
+
+    public void setGroupNum(Long groupNum) {
+        this.groupNum = groupNum;
+    }
+
+    public String getColor() {
+        return color;
+    }
+
+    public void setColor(String color) {
+        this.color = color;
+    }
+
+    public double getTextX() {
+        return textX;
+    }
+
+    public void setTextX(double textX) {
+        this.textX = textX;
+    }
+
+    public double getTextY() {
+        return textY;
+    }
+
+    public void setTextY(double textY) {
+        this.textY = textY;
+    }
+
+    public double getPointX() {
+        return pointX;
+    }
+
+    public void setPointX(double pointX) {
+        this.pointX = pointX;
+    }
+
+    public double getPointY() {
+        return pointY;
+    }
+
+    public void setPointY(double pointY) {
+        this.pointY = pointY;
     }
 
     @Override
@@ -87,7 +143,7 @@ public class Node {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Node node = (Node) o;
-        return Objects.equals(id, node.id);
+        return id.equals(node.id);
     }
 
     @Override

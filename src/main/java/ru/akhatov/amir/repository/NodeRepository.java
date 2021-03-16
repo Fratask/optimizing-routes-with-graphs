@@ -14,4 +14,6 @@ public interface NodeRepository extends JpaRepository<Node, Long> {
     Set<Node> findAllByNodeType(NodeType nodeType);
 
     Optional<Node> findByName(String name);
+
+    Optional<Node> findByNameAndGroupNum(String name, Long groupNum);
 }

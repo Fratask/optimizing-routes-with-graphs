@@ -1,6 +1,4 @@
-package ru.akhatov.amir.utils;
-
-import ru.akhatov.amir.model.entity.Node;
+package ru.akhatov.amir.model.entity;
 
 import java.util.StringJoiner;
 

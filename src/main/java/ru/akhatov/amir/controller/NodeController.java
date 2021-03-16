@@ -8,8 +8,9 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import ru.akhatov.amir.model.dto.NodeDto;
-import ru.akhatov.amir.service.NodeService;
+import ru.akhatov.amir.service.route.NodeService;
 
 @Controller
 @RequestMapping(NodeController.BASE_MAPPING)
@@ -17,6 +18,7 @@ public class NodeController {
 
     protected static final String BASE_MAPPING = "/node/v1";
     private final String GET_MAPPING = "/get/{id}";
+    private final String GET_BY_NAME_MAPPING = "/get/name";
     private final String ADD_MAPPING = "/add";
     private final String GET_ALL_MAPPING = "/all";
     private final String GET_ALL_BY_TYPE_MAPPING = "/all/{type}";
@@ -27,6 +29,11 @@ public class NodeController {
     @GetMapping(GET_MAPPING)
     public ResponseEntity<?> getNode(@PathVariable("id") Long id) {
         return ResponseEntity.ok(nodeService.getNode(id));
+    }
+
+    @GetMapping(GET_BY_NAME_MAPPING)
+    public ResponseEntity<?> getNodeByName(@RequestParam String name, @RequestParam Long groupNum) {
+        return ResponseEntity.ok(nodeService.getNodeByNameAndGroupNum(name, groupNum));
     }
 
     @PostMapping(ADD_MAPPING)
