@@ -94,6 +94,103 @@ Insert into nodes (id, node_type, name, pointX, pointY, group_num, color, textX,
 values (nextval('node_id_generator'), 'UNDERGROUND', 'Чкаловская', '3450', '1700', '10', '#7ADB28', '2800', '1755',
         '55.7558', '37.6579');
 
+Insert into nodes (id, node_type, name, pointX, pointY, group_num, color, textX, textY, latitude, longitude)
+values (nextval('node_id_generator'), 'UNDERGROUND', 'Павелецкая', '', '', '2', '', '', '',
+        '', '');
+Insert into nodes (id, node_type, name, pointX, pointY, group_num, color, textX, textY, latitude, longitude)
+values (nextval('node_id_generator'), 'UNDERGROUND', 'Павелецкая', '', '', '5', '', '', '',
+        '', '');
+Insert into nodes (id, node_type, name, pointX, pointY, group_num, color, textX, textY, latitude, longitude)
+values (nextval('node_id_generator'), 'UNDERGROUND', 'Серпуховская', '', '', '9', '', '', '',
+        '', '');
+Insert into nodes (id, node_type, name, pointX, pointY, group_num, color, textX, textY, latitude, longitude)
+values (nextval('node_id_generator'), 'UNDERGROUND', 'Добрынинская', '', '', '5', '', '', '',
+        '', '');
+Insert into nodes (id, node_type, name, pointX, pointY, group_num, color, textX, textY, latitude, longitude)
+values (nextval('node_id_generator'), 'UNDERGROUND', 'Октябрьская', '', '', '6', '', '', '',
+        '', '');
+Insert into nodes (id, node_type, name, pointX, pointY, group_num, color, textX, textY, latitude, longitude)
+values (nextval('node_id_generator'), 'UNDERGROUND', 'Октябрьская', '', '', '5', '', '', '',
+        '', '');
+Insert into nodes (id, node_type, name, pointX, pointY, group_num, color, textX, textY, latitude, longitude)
+values (nextval('node_id_generator'), 'UNDERGROUND', 'Парк Культуры', '', '', '1', '', '', '',
+        '', '');
+Insert into nodes (id, node_type, name, pointX, pointY, group_num, color, textX, textY, latitude, longitude)
+values (nextval('node_id_generator'), 'UNDERGROUND', 'Парк Культуры', '', '', '', '5', '', '',
+        '', '');
+Insert into nodes (id, node_type, name, pointX, pointY, group_num, color, textX, textY, latitude, longitude)
+values (nextval('node_id_generator'), 'UNDERGROUND', 'Киевская', '', '', '3', '', '', '',
+        '', '');
+Insert into nodes (id, node_type, name, pointX, pointY, group_num, color, textX, textY, latitude, longitude)
+values (nextval('node_id_generator'), 'UNDERGROUND', 'Киевская', '', '', '4', '', '', '',
+        '', '');
+Insert into nodes (id, node_type, name, pointX, pointY, group_num, color, textX, textY, latitude, longitude)
+values (nextval('node_id_generator'), 'UNDERGROUND', 'Киевская', '', '', '5', '', '', '',
+        '', '');
+Insert into nodes (id, node_type, name, pointX, pointY, group_num, color, textX, textY, latitude, longitude)
+values (nextval('node_id_generator'), 'UNDERGROUND', 'Краснопресненская', '', '', '5', '', '', '',
+        '', '');
+Insert into nodes (id, node_type, name, pointX, pointY, group_num, color, textX, textY, latitude, longitude)
+values (nextval('node_id_generator'), 'UNDERGROUND', 'Баррикадная', '', '', '7', '', '', '',
+        '', '');
+Insert into nodes (id, node_type, name, pointX, pointY, group_num, color, textX, textY, latitude, longitude)
+values (nextval('node_id_generator'), 'UNDERGROUND', 'Белорусская', '', '', '7', '', '', '',
+        '', '');
+Insert into nodes (id, node_type, name, pointX, pointY, group_num, color, textX, textY, latitude, longitude)
+values (nextval('node_id_generator'), 'UNDERGROUND', 'Белорусская', '', '', '5', '', '', '',
+        '', '');
+Insert into nodes (id, node_type, name, pointX, pointY, group_num, color, textX, textY, latitude, longitude)
+values (nextval('node_id_generator'), 'UNDERGROUND', 'Менделеевская', '', '', '9', '', '', '',
+        '', '');
+Insert into nodes (id, node_type, name, pointX, pointY, group_num, color, textX, textY, latitude, longitude)
+values (nextval('node_id_generator'), 'UNDERGROUND', 'Новослободская', '', '', '5', '', '', '',
+        '', '');
+Insert into nodes (id, node_type, name, pointX, pointY, group_num, color, textX, textY, latitude, longitude)
+values (nextval('node_id_generator'), 'UNDERGROUND', 'Проспект мира', '', '', '6', '', '', '',
+        '', '');
+Insert into nodes (id, node_type, name, pointX, pointY, group_num, color, textX, textY, latitude, longitude)
+values (nextval('node_id_generator'), 'UNDERGROUND', 'Проспект мира', '', '', '5', '', '', '',
+        '', '');
+Insert into nodes (id, node_type, name, pointX, pointY, group_num, color, textX, textY, latitude, longitude)
+values (nextval('node_id_generator'), 'UNDERGROUND', 'Комсомольская', '', '', '1', '', '', '',
+        '', '');
+Insert into nodes (id, node_type, name, pointX, pointY, group_num, color, textX, textY, latitude, longitude)
+values (nextval('node_id_generator'), 'UNDERGROUND', 'Комсомольская', '', '', '5', '', '', '',
+        '', '');
+Insert into nodes (id, node_type, name, pointX, pointY, group_num, color, textX, textY, latitude, longitude)
+values (nextval('node_id_generator'), 'UNDERGROUND', 'Цветной бульвар', '', '', '9', '', '', '',
+        '', '');
+Insert into nodes (id, node_type, name, pointX, pointY, group_num, color, textX, textY, latitude, longitude)
+values (nextval('node_id_generator'), 'UNDERGROUND', 'Трубная', '', '', '10', '', '', '',
+        '', '');
+Insert into nodes (id, node_type, name, pointX, pointY, group_num, color, textX, textY, latitude, longitude)
+values (nextval('node_id_generator'), 'UNDERGROUND', 'Чеховская', '', '', '9', '', '', '',
+        '', '');
+Insert into nodes (id, node_type, name, pointX, pointY, group_num, color, textX, textY, latitude, longitude)
+values (nextval('node_id_generator'), 'UNDERGROUND', 'Боровицкая', '', '', '9', '', '', '',
+        '', '');
+Insert into nodes (id, node_type, name, pointX, pointY, group_num, color, textX, textY, latitude, longitude)
+values (nextval('node_id_generator'), 'UNDERGROUND', 'Арбатская', '', '', '3', '', '', '',
+        '', '');
+Insert into nodes (id, node_type, name, pointX, pointY, group_num, color, textX, textY, latitude, longitude)
+values (nextval('node_id_generator'), 'UNDERGROUND', 'Библиотека имени Ленина', '', '', '1', '', '', '',
+        '', '');
+Insert into nodes (id, node_type, name, pointX, pointY, group_num, color, textX, textY, latitude, longitude)
+values (nextval('node_id_generator'), 'UNDERGROUND', 'Александровский сад', '', '', '4', '', '', '',
+        '', '');
+Insert into nodes (id, node_type, name, pointX, pointY, group_num, color, textX, textY, latitude, longitude)
+values (nextval('node_id_generator'), 'UNDERGROUND', 'Кропоткинская', '', '', '1', '', '', '',
+        '', '');
+Insert into nodes (id, node_type, name, pointX, pointY, group_num, color, textX, textY, latitude, longitude)
+values (nextval('node_id_generator'), 'UNDERGROUND', 'Полянка', '', '', '9', '', '', '',
+        '', '');
+Insert into nodes (id, node_type, name, pointX, pointY, group_num, color, textX, textY, latitude, longitude)
+values (nextval('node_id_generator'), 'UNDERGROUND', 'Арбатская', '', '', '4', '', '', '',
+        '', '');
+Insert into nodes (id, node_type, name, pointX, pointY, group_num, color, textX, textY, latitude, longitude)
+values (nextval('node_id_generator'), 'UNDERGROUND', 'Смоленская', '', '', '4', '', '', '',
+        '', '');
+
 
 
 Insert into connections (id, node_from_id, node_to_id)
