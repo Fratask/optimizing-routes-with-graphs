@@ -1,0 +1,396 @@
+<!DOCTYPE html>
+<meta charset="utf-8">
+<style>
+
+    select {
+        font-size: 100px;
+    }
+
+    label {
+        font-size: 100px;
+    }
+
+    p {
+        font-size: 100px;
+    }
+
+    input {
+        font-size: 100px;
+    }
+</style>
+<body>
+<script src="https://d3js.org/d3.v3.min.js"></script>
+<script>
+    async function getNodeCss() {
+        const getNodes = await fetch('http://127.0.0.1:8080//node/v1/all/UNDERGROUND', {
+            method: 'GET',
+            headers: {
+                'Accept-Encoding': 'gzip, deflate, br',
+                'Connection': 'keep-alive',
+                'Accept': '*/*',
+                'User-Agent': 'PostmanRuntime/7.26.8',
+                'Content-Type': 'application/json'
+            }
+        });
+        const data = await getNodes.json();
+        var css = '';
+        data.forEach(j => {
+            var className = j.name + j.groupNum;
+            className = className.split(' ').join('_');
+            css += '.' + className + ' {\nbackground-color:' + j.color + ';\n}\n';
+        })
+        return css;
+    }
+
+    getNodeCss().then(d => {
+        var css = d,
+            head = document.head || document.getElementsByTagName('head')[0],
+            style = document.createElement('style');
+
+        head.appendChild(style);
+
+        style.type = 'text/css';
+        if (style.styleSheet) {
+            // This is required for IE8 and below.
+            style.styleSheet.cssText = css;
+        } else {
+            style.appendChild(document.createTextNode(css));
+        }
+    });
+
+
+    var path = null;
+    var changedPath = false;
+
+    const getGraph = async () => {
+        return await fetch('http://127.0.0.1:8080/graph/v1/get?type=UNDERGROUND', {
+            method: 'GET',
+            headers: {
+                'Accept-Encoding': 'gzip, deflate, br',
+                'Connection': 'keep-alive',
+                'Accept': '*/*',
+                'User-Agent': 'PostmanRuntime/7.26.8',
+                'Content-Type': 'application/json'
+            }
+        }).then((response) => {
+            return response.json()
+        });
+    }
+    getGraph().then(graph => {
+        var width = 10000,
+            height = 10000;
+        var scale = 1;
+        var offsetX = -200;
+        var offsetY = -500;
+        var circleRadius = 30;
+        var linkStrokeWidth = 5;
+        var labelFontSize = 100;
+        var selectedCircleRadius = 50;
+        var selectedLinkStrokeWidth = 35;
+        var selectedLabelFontSize = 125;
+
+        var force = d3.layout.force()
+            .size([width, height])
+            .on("tick", tick)
+            .on("end", function () {
+                force.start();
+            })
+        ;
+
+        var svg = d3
+            .select("body")
+            .append("svg")
+            .attr("width", width)
+            .attr("height", height);
+
+        var link = svg.selectAll(".link"),
+            node = svg.selectAll(".node"),
+            label = svg.selectAll(".mytext");
+
+        function clearPath() {
+            for (var i = 0; i < node[0].length; i++) {
+                node[0][i].setAttribute("r", circleRadius);
+            }
+            for (var i = 0; i < label[0].length; i++) {
+                label[0][i].style.fontSize = labelFontSize;
+            }
+            for (var i = 0; i < link[0].length; i++) {
+                link[0][i].style.strokeWidth = linkStrokeWidth;
+            }
+        }
+
+        async function updatePath() {
+            if (changedPath) {
+                clearPath();
+                var tmp = path;
+                path = null;
+                changedPath = false;
+                var pathNames = tmp.then(d => {
+                    var tmpPathNames = "";
+                    for (var j = 0; j < d.length; j++) {
+                        var pathNodeName = d[j].name;
+                        var pathNodeGroupNum = d[j].groupNum;
+                        tmpPathNames += pathNodeName + pathNodeGroupNum + ";";
+                    }
+                    return tmpPathNames;
+                })
+                pathNames = pathNames;
+                for (var i = 0; i < node[0].length; i++) {
+                    var nodeName = node[0][i].getAttribute("nodeName");
+                    var nodeGroupNum = node[0][i].getAttribute("nodeGroupNum");
+                    var tmpNodeNameGroup = nodeName + nodeGroupNum;
+                    await pathNames.then(d => {
+                        if (d.includes(tmpNodeNameGroup)) {
+                            node[0][i].setAttribute("r", selectedCircleRadius);
+                        }
+                    })
+                }
+                for (var i = 0; i < label[0].length; i++) {
+                    var nodeName = label[0][i].getAttribute("nodeName");
+                    var nodeGroupNum = label[0][i].getAttribute("nodeGroupNum");
+                    var tmpNodeNameGroup = nodeName + nodeGroupNum;
+                    await pathNames.then(d => {
+                        if (d.includes(tmpNodeNameGroup)) {
+                            label[0][i].style.fontSize = selectedLabelFontSize;
+                        }
+                    })
+                }
+                for (var i = 0; i < link[0].length; i++) {
+                    var nodeFromName = link[0][i].getAttribute("nodeFromName");
+                    var nodeFromGroupNum = link[0][i].getAttribute("nodeFromGroupNum");
+                    var nodeToName = link[0][i].getAttribute("nodeToName");
+                    var nodeToGroupNum = link[0][i].getAttribute("nodeToGroupNum");
+                    var tmpNodeFromNameFromGroup = nodeFromName + nodeFromGroupNum;
+                    var tmpNodeToNameToGroup = nodeToName + nodeToGroupNum;
+                    await pathNames.then(d => {
+                        if (d.includes(tmpNodeFromNameFromGroup) && d.includes(tmpNodeToNameToGroup)) {
+                            link[0][i].style.strokeWidth = selectedLinkStrokeWidth;
+                        }
+                    })
+                }
+            }
+        }
+
+        function tick() {
+            updateSelectsStyle();
+            if (path !== null) {
+                updatePath();
+            }
+            link
+                .attr("x1", function (d) {
+                    return (d.source.pointX + offsetX) * scale;
+                })
+                .attr("y1", function (d) {
+                    return (d.source.pointY + offsetY) * scale;
+                })
+                .attr("x2", function (d) {
+                    return (d.target.pointX + offsetX) * scale;
+                })
+                .attr("y2", function (d) {
+                    return (d.target.pointY + offsetY) * scale;
+                });
+
+            node
+                .attr("transform", function (d) {
+                    return "translate(" + (d.pointX + offsetX) + "," + (d.pointY + offsetY) + ")";
+                });
+
+            label
+                .attr("x", function (d) {
+                    return d.textX + offsetX + 60;
+                })
+                .attr("y", function (d) {
+                    return d.textY + offsetY - 40;
+                });
+        }
+
+
+        force.nodes(graph.nodes)
+            .links(graph.links)
+            .start();
+
+
+        link = link.data(graph.links)
+            .enter().append("line")
+            .attr("class", "link")
+            .attr("nodeFromName", function (d) {
+                return d.source.name
+            })
+            .attr("nodeFromGroupNum", function (d) {
+                return d.source.groupNum
+            })
+            .attr("nodeToName", function (d) {
+                return d.target.name
+            })
+            .attr("nodeToGroupNum", function (d) {
+                return d.target.groupNum
+            })
+            .style("stroke-width", linkStrokeWidth)
+            .style("stroke", function (d) {
+                return d.color;
+            });
+
+
+        node = node.data(graph.nodes)
+            .enter().append("circle")
+            .style("fill", function (d) {
+                return d.color;
+            })
+            .attr("nodeName", function (d) {
+                return d.name
+            })
+            .attr("nodeGroupNum", function (d) {
+                return d.groupNum
+            })
+            .attr("class", "node")
+            .attr("r", circleRadius);
+
+
+        label = label.data(graph.nodes)
+            .enter().append("text")
+            .text(function (d) {
+                return d.name;
+            })
+            .attr("nodeName", function (d) {
+                return d.name
+            })
+            .attr("nodeGroupNum", function (d) {
+                return d.groupNum
+            })
+            .style("text-anchor", "start")
+            .style("fill", "#555")
+            .style("font-family", "sans-serif")
+            .style("font-size", labelFontSize);
+    });
+
+
+    async function getNodeFromDataList() {
+        const getNodes = await fetch('http://127.0.0.1:8080//node/v1/all/UNDERGROUND', {
+            method: 'GET',
+            headers: {
+                'Accept-Encoding': 'gzip, deflate, br',
+                'Connection': 'keep-alive',
+                'Accept': '*/*',
+                'User-Agent': 'PostmanRuntime/7.26.8',
+                'Content-Type': 'application/json'
+            }
+        });
+
+        const data = await getNodes.json();
+        var datalist = '';
+        data.forEach(j => {
+            var className = j.name + j.groupNum;
+            className = className.split(' ').join('_');
+            datalist += '<option class="' + className + '" value="' + j.name + '">' + j.name + '</option>';
+        })
+        return datalist;
+
+    }
+
+    getNodeFromDataList().then(d => {
+        document.getElementById("datalistNodeFrom").innerHTML = d;
+    });
+
+    async function getNodeToDataList() {
+        const getNodes = await fetch('http://127.0.0.1:8080//node/v1/all/UNDERGROUND', {
+            method: 'GET',
+            headers: {
+                'Accept-Encoding': 'gzip, deflate, br',
+                'Connection': 'keep-alive',
+                'Accept': '*/*',
+                'User-Agent': 'PostmanRuntime/7.26.8',
+                'Content-Type': 'application/json'
+            }
+        });
+        const data = await getNodes.json();
+        var datalist = '';
+        data.forEach(j => {
+            var className = j.name + j.groupNum;
+            className = className.split(' ').join('_');
+            datalist += '<option class="' + className + '" value="' + j.name + '">' + j.name + '</option>';
+        })
+        return datalist;
+    }
+
+    getNodeToDataList().then(d => {
+        document.getElementById("datalistNodeTo").innerHTML = d;
+    });
+
+    function updateSelectsStyle() {
+        var nodeFromSelect = document.getElementById("datalistNodeFrom");
+        var selectedIndexNodeFrom = nodeFromSelect.selectedIndex;
+        var nodeFromSelectedOption = nodeFromSelect[selectedIndexNodeFrom];
+        nodeFromSelect.setAttribute("class", nodeFromSelectedOption.className);
+
+        var nodeToSelect = document.getElementById("datalistNodeTo");
+        var selectedIndexNodeTo = nodeToSelect.selectedIndex;
+        var nodeToSelectedOption = nodeToSelect[selectedIndexNodeTo];
+        nodeToSelect.setAttribute("class", nodeToSelectedOption.className);
+    }
+
+
+    async function getRouteJson() {
+        var selNodeFrom = document.getElementById("datalistNodeFrom");
+        var nodeFromName = selNodeFrom.options[selNodeFrom.selectedIndex].text;
+        var nodeFromGroupNum = selNodeFrom.options[selNodeFrom.selectedIndex].className.replace(nodeFromName.replace(" ", "_"), "");
+        var nodeFrom = getNodeByNameAndGroupNum(nodeFromName, nodeFromGroupNum);
+
+        var selNodeTo = document.getElementById("datalistNodeTo");
+        var nodeToName = selNodeTo.options[selNodeTo.selectedIndex].text;
+        var nodeToGroupNum = selNodeTo.options[selNodeTo.selectedIndex].className.replace(nodeToName.replace(" ", "_"), "");
+        var nodeTo = getNodeByNameAndGroupNum(nodeToName, nodeToGroupNum);
+
+        var data = nodeFrom.then(dataNodeFrom => {
+            return nodeTo.then(dataNodeTo => {
+                var str = '{"from":' + JSON.stringify(dataNodeFrom) + ',"to":' + JSON.stringify(dataNodeTo) + '}';
+                return str;
+            })
+        });
+        return data;
+    }
+
+    async function findRoute() {
+        var data = getRouteJson();
+        var tmp = data.then(async function (d) {
+            var url = "http://127.0.0.1:8080/route/v1/find"
+            const response = await fetch(url, {
+                method: 'POST',
+                headers: {
+                    'Accept-Encoding': 'gzip, deflate, br',
+                    'Connection': 'keep-alive',
+                    'Accept': '*/*',
+                    'User-Agent': 'PostmanRuntime/7.26.8',
+                    'Content-Type': 'application/json'
+                },
+                body: d
+            });
+            path = tmp;
+            changedPath = true;
+            return response.json();
+        });
+    }
+
+
+    async function getNodeByNameAndGroupNum(name = {}, groupNum = {}) {
+        const getNode = await fetch('http://127.0.0.1:8080/node/v1/get/name?name=' + name + "&groupNum=" + groupNum, {
+            method: 'GET',
+            headers: {
+                'Accept-Encoding': 'gzip, deflate, br',
+                'Connection': 'keep-alive',
+                'Accept': '*/*',
+                'User-Agent': 'PostmanRuntime/7.26.8',
+                'Content-Type': 'application/json'
+            }
+        });
+        return getNode.json();
+    }
+</script>
+<label for="nodesFrom">Точка 1: </label>
+<select id="datalistNodeFrom" name="nodeFrom" required></select>
+
+<label for="nodesTo">Точка 2: </label>
+<select id="datalistNodeTo" name="nodeTo" required></select>
+
+<p>Построить маршрут</p>
+<input type="submit" value="Построить маршрут" onclick="findRoute()">
+</body>
