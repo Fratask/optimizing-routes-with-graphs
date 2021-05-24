@@ -22,6 +22,7 @@ public class NodeController {
     private final String ADD_MAPPING = "/add";
     private final String GET_ALL_MAPPING = "/all";
     private final String GET_ALL_BY_TYPE_MAPPING = "/all/{type}";
+    private final String REFORMAT_POINTS_MAPPING = "/reformat/points";
 
     @Autowired
     private NodeService nodeService;
@@ -49,5 +50,11 @@ public class NodeController {
     @GetMapping(GET_ALL_BY_TYPE_MAPPING)
     public ResponseEntity<?> getAllNodesByType(@PathVariable String type) {
         return ResponseEntity.ok(nodeService.getAllNodesByType(type));
+    }
+
+    @GetMapping(REFORMAT_POINTS_MAPPING)
+    public ResponseEntity<?> reformatPoints() {
+        nodeService.reformatPoints();
+        return ResponseEntity.ok().build();
     }
 }

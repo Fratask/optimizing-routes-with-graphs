@@ -5,6 +5,7 @@ import org.springframework.stereotype.Repository;
 import ru.akhatov.amir.model.entity.Node;
 import ru.akhatov.amir.model.entity.NodeType;
 
+import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 
@@ -16,4 +17,6 @@ public interface NodeRepository extends JpaRepository<Node, Long> {
     Optional<Node> findByName(String name);
 
     Optional<Node> findByNameAndGroupNum(String name, Long groupNum);
+
+    List<Node> findByGroupNum(Long groupNum);
 }

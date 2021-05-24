@@ -38,7 +38,7 @@ public class GraphService {
         List<NodeDto> nodes = new ArrayList<>(nodeMapper.toDtoSet(nodeRepository.findAllByNodeType(nodeType)));
 
         Set<ConnectionDto> connections = connectionMapper.toDtoSet(connectionRepository.findAllByNodeType(nodeType));
-        List<LinkDto> links;
+        List<LinkDto> links = new ArrayList<>();
         links = connections.stream().map(connection -> {
             LinkDto linkDto = new LinkDto();
             Long sourceIndex;

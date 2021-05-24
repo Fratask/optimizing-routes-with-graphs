@@ -67,4 +67,17 @@ public class NodeService {
                 .collect(Collectors.toList());
         return nodeMapper.toDtoList(nodes);
     }
+
+    public void reformatPoints() {
+        List<Node> nodes = nodeRepository.findAll();
+        for (Node node : nodes) {
+            double pointX = (node.getLongitude() - 37) * 10000 - 5000;
+            double pointY = (node.getLatitude() - 55) * 10000 * (-1) + 10000 - 2250;
+            node.setPointX(pointX);
+            node.setPointY(pointY);
+            node.setTextX(pointX);
+            node.setTextY(pointY);
+        }
+        nodeRepository.saveAll(nodes);
+    }
 }

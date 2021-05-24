@@ -44,3 +44,48 @@ create table connections
 alter table connections
     owner to sa;
 
+create sequence news_id_generator
+    increment by 1;
+
+alter sequence news_id_generator owner to sa;
+
+create table news
+(
+    id           bigint       not null
+        constraint news_pkey
+            primary key,
+    title        varchar(255) not null,
+    body         text         not null,
+    node_from_id bigint
+        constraint node_from_id_nodes_fk
+            references nodes,
+    node_to_id   bigint
+        constraint node_to_id_nodes_fk
+            references nodes,
+    comment      varchar(255),
+    published_at timestamp    not null,
+    traffic_id   bigint
+        constraint traffic_id_fk
+            references traffic
+);
+
+alter table news
+    owner to sa;
+
+create sequence traffic_id_generator
+    increment by 1;
+
+alter sequence traffic_id_generator owner to sa;
+
+create table traffic
+(
+    id    bigint       not null
+        constraint traffic_pkey
+            primary key,
+    name  varchar(255) not null,
+    value double precision
+);
+
+alter table traffic
+    owner to sa;
+
